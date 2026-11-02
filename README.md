@@ -16,7 +16,7 @@ Python 3.8+ is recommended.
 
 2. Install the required dependencies:
    ```bash
-   pip install ultralytics flask requests opencv-python-headless
+   pip install ultralytics flask requests opencv-python
    ```
 
 ## Project Structure
@@ -61,3 +61,31 @@ Once you have a real camera that exposes an HTTP API for capturing images:
 3. Change the URL to point to your real camera's API endpoint (e.g., `http://<camera_ip>/api/capture`).
 
 If you need the detector to run continuously monitoring an industrial line, you can uncomment `run_loop(interval=5)` at the bottom of `detector.py`.
+
+## Advanced Usage for Industrial Scenarios
+
+Based on the requirements to handle large datasets of industrial images and support moving cameras for hazard detection, two advanced scripts are included.
+
+### 1. Fine-Tuning on a Custom Industrial Dataset
+
+If you have a large dataset of industrial images (e.g., hard hats, forklifts, specific machinery), you can fine-tune the YOLO model for higher accuracy using `train_industrial.py`.
+
+1. Prepare your dataset in YOLO format and create a `data.yaml` file describing the classes and paths to your images.
+2. Open `train_industrial.py` and modify the `model.train()` call to point to your `data.yaml`.
+3. Run the script:
+   ```bash
+   python train_industrial.py
+   ```
+   This will output a new model weight file (e.g., `best.pt`) which you can then use in the detector.
+
+### 2. Video Stream Detection (Moving Cameras)
+
+For a moving camera on an industrial site, a continuous video stream is more appropriate than fetching single images. Use `video_detector.py` to connect to an RTSP, HTTP stream, or a local webcam. It uses YOLO's built-in tracking capabilities to persist object IDs across frames.
+
+1. Open `video_detector.py`.
+2. Scroll to the bottom and update the `stream_url` to match your camera's address (e.g., `rtsp://192.168.1.100:554/stream`).
+3. Run the script:
+   ```bash
+   python video_detector.py
+   ```
+   A window will pop up showing the live video feed with bounding boxes and tracking IDs. Press `q` to quit.
