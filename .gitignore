@@ -1,0 +1,5 @@
+venv/
+mock_camera.log
+detection_result.jpg
+*.pt
+test_image.jpg
