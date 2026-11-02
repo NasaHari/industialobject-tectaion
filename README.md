@@ -89,3 +89,24 @@ For a moving camera on an industrial site, a continuous video stream is more app
    python video_detector.py
    ```
    A window will pop up showing the live video feed with bounding boxes and tracking IDs. Press `q` to quit.
+
+### 3. Using Ready-Made Industrial Models
+
+If you don't want to train your own model or don't have a dataset, you can use pre-trained open-source models fine-tuned specifically for industrial safety (e.g., detecting hard hats, goggles, gloves, etc.).
+
+We have included a script to automatically download and evaluate some of the best publicly available models:
+
+```bash
+python download_evaluate_models.py
+```
+
+This script will download the models, inspect their capabilities, and provide a recommendation. Once downloaded, you can plug the recommended `.pt` file directly into your `detector.py` or `video_detector.py` by changing the model initialization line:
+
+```python
+# In detector.py or video_detector.py
+# Change this:
+model = YOLO('yolov8n.pt')
+
+# To this (for example):
+model = YOLO('yolov8s_ppe.pt')
+```

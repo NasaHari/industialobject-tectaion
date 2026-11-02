@@ -6,3 +6,5 @@ test_image.jpg
 datasets/
 runs/
 train.log
+yolov8m_hardhat.pt
+yolov8s_ppe.pt
